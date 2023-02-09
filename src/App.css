@@ -1,0 +1,87 @@
+
+/* Custom Variables */
+:root {
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --kv-ee-heading-font-family: Oswald;
+  --kv-ee-heading-font-weight: 400;
+  --kv-ee-heading-font-style: normal;
+  --kv-ee-body-font-family: Quattrocento;
+  --kv-ee-body-font-weight: 400;
+  --kv-ee-body-font-style: normal;
+  --kv-ee-font-size-factor: 1;
+  --kv-ee-font-size: 100%;
+  --kv-ee-global-font-size-factor: var(--kv-ee-font-size-factor,1);
+  --section-bg-color: rgb(23,73,80);
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+/*Navbar*/
+.navbar-scrolled {
+  background-color: var(--section-bg-color);
+  box-shadow: 0px 0px rgba(0,0,0,0.15);
+}
+
+
+/* Home Page*/
+#main-section{
+  padding: 0px;
+  margin: 0px;
+  height: 1450px;
+  width: 100%;
+  background-color:rgb(80, 80, 80);
+  background-image:url('./images/BrookCagleBG1.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: brightness(0.95) opacity(80%);
+}
+
+#welcome-heading {
+  font-size: 4em;
+  text-shadow: 1px 1px 10px black;
+  color: white;
+  max-width: 400px;
+  min-width: 275px;
+  font-family: var(--kv-ee-heading-font-family,"Nunito Sans","Open Sans",sans-serif);
+  font-weight: var(--kv-ee-heading-font-weight,normal);
+  font-style: var(--kv-ee-heading-font-style,normal);
+  line-height: 1.15em;
+}
+
+#mid-section {
+  min-height: 300px;
+  background-color: var(--section-bg-color);
+}
+
+#mid-section .mid-line-1 {
+  font-size: 2em;
+  color: white;
+  font-family: var(--kv-ee-heading-font-family,"Nunito Sans","Open Sans",sans-serif);
+  font-weight: var(--kv-ee-heading-font-weight,normal);
+  font-style: var(--kv-ee-heading-font-style,normal);
+  line-height: 2em;
+}
+
+
+
+
+
+
+
+/* Gallery */
+
+/* Blogs */
+
+/* About/Contact Page */
+
+/* Shared */
+.top-bar{
+  background-color: var(--section-bg-color);
+  height: 90px;
+}
+
