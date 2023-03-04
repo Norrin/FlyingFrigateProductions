@@ -1,3 +1,5 @@
-import Navbar from './navbar';
+import Navbar from "./Navbar";
+import Page from "./Page";
+import Grid from "./Grid";
 
-export {Navbar}
+export { Navbar, Page, Grid };
