@@ -1,4 +1,4 @@
-import Home from "./home";
+import Home from "./Home";
 import Activities from "./Activities/Activities";
 import Gallery from "./Gallery";
 import Blog from "./Blog";
