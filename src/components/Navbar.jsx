@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import fflogo from "../assets/fflogo.svg";
 
+import { navLinks } from "@constants";
+
 const Navbar = () => {
    const [isVisable, setVisable] = useState(false);
    const handleMenuClick = () => setVisable((prev) => !prev);
@@ -24,18 +26,17 @@ const Navbar = () => {
             </div>
             <div>
                <ul className='hidden sm:flex text-white'>
-                  <li>
-                     <Link to='/Activities'>Activities</Link>
-                  </li>
-                  <li>
-                     <Link to='/Gallery'>Gallery</Link>
-                  </li>
-                  <li>
-                     <Link to='/Blog'>Blog</Link>
-                  </li>
-                  <li>
-                     <Link to='/About'>About</Link>
-                  </li>
+                  {navLinks
+                     .filter((link) => link.id != "home" && link.visible)
+                     .map((link) => {
+                        return (
+                           <div key={link.id}>
+                              <li>
+                                 <Link to={link.link}>{link.title}</Link>
+                              </li>
+                           </div>
+                        );
+                     })}
                </ul>
             </div>
             <div className='flex sm:hidden pointer' onClick={handleMenuClick}>
@@ -58,21 +59,17 @@ const Navbar = () => {
          <div>
             {isVisable && (
                <ul className='absolute bg-black opacity-60 w-full px-8 pb-2'>
-                  <li className='w-full text-white'>
-                     <Link to='/'>Home</Link>
-                  </li>
-                  <li className='w-full text-white'>
-                     <Link to='/Activities'>Activities</Link>
-                  </li>
-                  <li className='w-full text-white'>
-                     <Link to='/Gallery'>Gallery</Link>
-                  </li>
-                  <li className='w-full text-white'>
-                     <Link to='/Blog'>Blog</Link>
-                  </li>
-                  <li className='w-full text-white'>
-                     <Link to='/About'>About</Link>
-                  </li>
+                  {navLinks
+                     .filter((link) => link.visible)
+                     .map((link) => {
+                        return (
+                           <div key={link.id}>
+                              <li className='w-full text-white'>
+                                 <Link to={link.link}>{link.title}</Link>
+                              </li>
+                           </div>
+                        );
+                     })}
                </ul>
             )}
          </div>
