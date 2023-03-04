@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { Page } from "@components";
 
 const Gallery = () => {
-  return (
-    <div>Gallery</div>
-  )
-}
+   return (
+      <Page>
+         <div>Gallery</div>
+      </Page>
+   );
+};
 
-export default Gallery
+export default Gallery;
