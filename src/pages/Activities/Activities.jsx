@@ -5,8 +5,9 @@ import { Maze } from "@pages";
 const Activities = () => {
    return (
       <Page>
-         <div>Activitites</div>
-         <Maze></Maze>
+         <div className='flex flex-col items-center mb-12'>Activitites</div>
+
+         <Maze />
       </Page>
    );
 };
