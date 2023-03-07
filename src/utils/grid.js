@@ -1,22 +1,106 @@
-const Grid = (container) => {
-   console.log(container);
-   container?.addEventListener("click", (evt) => {
-      // Get the x and y coordinates of the click relative to the grid
-      const x = evt.offsetX;
-      const y = evt.offsetY;
+import { Cell } from "@utils";
 
-      // Calculate the row and column of the clicked cell
-      const row = Math.floor(y / 50);
-      const col = Math.floor(x / 50);
+class Grid {
+   height = 0;
+   width = 0;
+   cellSize = 20;
+   grid = undefined;
+   canvas = undefined;
+   canvasHeight = 0;
+   canvasWidth = 0;
 
-      // Create a new point element and position it within the clicked cell
-      const point = document.createElement("div");
-      point.classList.add("point");
-      point.style.left = `${col * 50 + 20}px`;
-      point.style.top = `${row * 50 + 20}px`;
+   constructor(canvas, cellSize, viewport) {
+      //Make sure the canvas evenly divisible by the cell size
+      canvas.height = viewport.height - (viewport.height % cellSize);
+      canvas.width = viewport.width - (viewport.width % cellSize);
 
-      container.appendChild(point);
-   });
-};
+      this.height = canvas.height / cellSize;
+      this.width = canvas.width / cellSize;
+
+      this.canvas = canvas;
+      this.canvasHeight = canvas.height;
+      this.canvasWidth = canvas.width;
+
+      this.cellSize = cellSize;
+
+      this.grid = this.#GenerateEmptyGrid(this.height, this.width);
+   }
+
+   #GenerateEmptyGrid(height, width) {
+      // Create an empty maze with all walls intact
+      this.grid = [];
+      for (let y = 0; y < height; y++) {
+         this.grid[y] = [];
+         for (let x = 0; x < width; x++) {
+            this.grid[y][x] = new Cell(x, y);
+         }
+      }
+
+      return this.grid;
+   }
+
+   Render = (ctx) => {
+      const startX = 0;
+      const startY = 0;
+
+      // Define the maze as a series of paths
+      for (let y = 0; y < this.height; y++) {
+         for (let x = 0; x < this.width; x++) {
+            const cell = this.grid[y][x];
+
+            if (!cell.visible) continue;
+
+            if (cell.top && !cell.start) {
+               ctx.beginPath();
+               ctx.moveTo(
+                  startX + x * this.cellSize,
+                  startY + y * this.cellSize
+               );
+               ctx.lineTo(
+                  startX + (x + 1) * this.cellSize,
+                  startY + y * this.cellSize
+               );
+               ctx.stroke();
+            }
+            if (cell.right) {
+               ctx.beginPath();
+               ctx.moveTo(
+                  startX + (x + 1) * this.cellSize,
+                  startY + y * this.cellSize
+               );
+               ctx.lineTo(
+                  startX + (x + 1) * this.cellSize,
+                  startY + (y + 1) * this.cellSize
+               );
+               ctx.stroke();
+            }
+            if (cell.bottom && !cell.end) {
+               ctx.beginPath();
+               ctx.moveTo(
+                  startX + x * this.cellSize,
+                  startY + (y + 1) * this.cellSize
+               );
+               ctx.lineTo(
+                  startX + (x + 1) * this.cellSize,
+                  startY + (y + 1) * this.cellSize
+               );
+               ctx.stroke();
+            }
+            if (cell.left) {
+               ctx.beginPath();
+               ctx.moveTo(
+                  startX + x * this.cellSize,
+                  startY + y * this.cellSize
+               );
+               ctx.lineTo(
+                  startX + x * this.cellSize,
+                  startY + (y + 1) * this.cellSize
+               );
+               ctx.stroke();
+            }
+         }
+      }
+   };
+}
 
 export default Grid;

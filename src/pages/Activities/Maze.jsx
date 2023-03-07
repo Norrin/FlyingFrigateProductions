@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { NormalMaze, ImageMaze } from "@components";
+import { Heart } from "@assets";
 
 const Maze = () => {
-   const [mazeType, setMazetype] = useState("normal");
+   const [mazeType, setMazetype] = useState("image");
    const [viewportWidth, setViewportWidth] = useState(0);
    const [viewportHeight, setViewportHeight] = useState(0);
 
@@ -15,11 +16,6 @@ const Maze = () => {
       const handleResizeEvent = (evt) => {
          setViewportWidth(window.innerWidth);
          setViewportHeight(window.innerHeight);
-
-         console.log({
-            Width: window.innerWidth,
-            Height: window.innerHeight,
-         });
       };
 
       window.addEventListener("resize", handleResizeEvent);
@@ -38,7 +34,12 @@ const Maze = () => {
       height = Math.floor((viewportHeight - 250) / cellSize);
 
       const cEvent = new CustomEvent("generateMaze", {
-         detail: { height: height, width: width, cellSize: cellSize },
+         detail: {
+            height: height,
+            width: width,
+            cellSize: cellSize,
+            imagePath: `${Heart}`,
+         },
       });
 
       document.dispatchEvent(cEvent);

@@ -1,6 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { ImageMazeGrid } from "@utils";
 
 const ImageMaze = () => {
+   let canvas = undefined;
+   let ctx = undefined;
+   let image = undefined;
+
+   useEffect(() => {
+      const handleGenerateEvent = (event) => {
+         start(event.detail.imagePath, event.detail.cellSize ?? 20);
+      };
+
+      document.addEventListener("generateMaze", handleGenerateEvent);
+
+      return () => {
+         document.removeEventListener("generateMaze", handleGenerateEvent);
+      };
+   }, []);
+
+   const start = async (imgPath, cellSize) => {
+      const viewport = {
+         height: window.innerHeight - 260,
+         width: window.innerWidth - 100,
+      };
+
+      canvas = document.getElementById("myCanvas");
+      ctx = canvas.getContext("2d");
+
+      const imageGrid = new ImageMazeGrid(canvas, cellSize, viewport, imgPath);
+      await imageGrid.Start();
+      imageGrid.Render(ctx);
+
+      return true;
+   };
+
    return (
       <div className='flex flex-col gap-2 justify-center items-center pb-4'>
          <div>

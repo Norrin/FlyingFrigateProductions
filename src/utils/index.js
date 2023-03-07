@@ -1,3 +1,6 @@
-import Grid from "./grid";
+import Grid from "./Grid";
+import Cell from "./Cell";
+import MazeGrid from "./MazeGrid";
+import ImageMazeGrid from "./ImageMazeGrid";
 
-export { Grid };
+export { Grid, Cell, MazeGrid, ImageMazeGrid };
