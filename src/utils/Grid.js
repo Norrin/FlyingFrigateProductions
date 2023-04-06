@@ -24,6 +24,16 @@ class Grid {
       this.cellSize = cellSize;
 
       this.grid = this.#GenerateEmptyGrid(this.height, this.width);
+
+      this.canvas.onclick = (evt) => {
+         console.log("Grid");
+         // const gx = Math.floor(evt.offsetX / this.cellSize);
+         // const gy = Math.floor(evt.offsetY / this.cellSize);
+         // const cell = this.grid[gy][gx];
+         // console.log({
+         //    Cell: cell,
+         // });
+      };
    }
 
    #GenerateEmptyGrid(height, width) {
@@ -50,7 +60,15 @@ class Grid {
 
             if (!cell.visible) continue;
 
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+
             if (cell.top && !cell.start) {
+               if (cell.neighbors.top?.visible === false) {
+                  //ctx.lineWidth = 2;
+                  ctx.strokeStyle = "red";
+               }
+
                ctx.beginPath();
                ctx.moveTo(
                   startX + x * this.cellSize,
