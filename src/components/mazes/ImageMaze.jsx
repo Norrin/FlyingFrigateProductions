@@ -31,6 +31,16 @@ const ImageMaze = () => {
       await imageGrid.Start();
       imageGrid.Render(ctx);
 
+      // canvas.onclick = (evt) => {
+      //    const gx = Math.floor(evt.offsetX / cellSize);
+      //    const gy = Math.floor(evt.offsetY / cellSize);
+      //    const cell = imageGrid.grid[gy][gx];
+      //    console.log({
+      //       Text: "Maze",
+      //       Cell: cell,
+      //    });
+      // };
+
       return true;
    };
 
@@ -40,7 +50,7 @@ const ImageMaze = () => {
             <h1>Image Maze</h1>
          </div>
 
-         <div>
+         <div className='border border-zinc-500'>
             <canvas id='myCanvas'></canvas>
          </div>
       </div>
