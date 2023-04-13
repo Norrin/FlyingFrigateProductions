@@ -1,67 +1,54 @@
-import React, { useRef } from "react";
+import React, { useMemo, useState, useDeferredValue } from "react";
 import { Page } from "@components";
-import { Editor } from "@tinymce/tinymce-react";
+
+const List = ({ input }) => {
+   const SIZE = 20000;
+   const defInput = useDeferredValue(input);
+   const results = useMemo(() => {
+      const list = [];
+      for (let i = 0; i < SIZE; i++) {
+         list.push(<div key={i}>{defInput}</div>);
+      }
+      return list;
+   }, [defInput]);
+
+   return results;
+};
+
+const waitThenDo = (ms, cb) => {
+   const now = performance.now();
+   while (performance.now() - now < ms) {}
+
+   return cb();
+};
 
 const Blog = () => {
-   const key = "2kzgf5puugnlkc5lm9u1l9juqcaw7q4gro2k592ayyv7uh1g";
-   const editorRef = useRef(null);
-   const log = () => {
-      if (editorRef.current) {
-         console.log(editorRef.current.getContent());
-      }
+   const [input, setInput] = useState("");
+
+   const callWait = () => {
+      console.log("Start wait");
+      waitThenDo(2000, () => {
+         console.log("Done Waiting");
+      });
    };
-
-   const all_plugins = [
-      "advlist",
-      "autolink",
-      "lists",
-      "link",
-      "image",
-      "charmap",
-      "preview",
-      "anchor",
-      "searchreplace",
-      "visualblocks",
-      "code",
-      "fullscreen",
-      "insertdatetime",
-      "media",
-      "table",
-      "code",
-      "help",
-      "wordcount",
-   ];
-
-   const current_plugins = ["code"];
 
    return (
       <Page>
          <main>
             <header className='flex flex-col justify-center items-center py-3'>
                Blog
+               <button onClick={() => callWait()}>Try out timed func</button>
             </header>
-            <section>
-               <Editor
-                  apiKey={key}
-                  onInit={(evt, editor) => (editorRef.current = editor)}
-                  initialValue='<p>This is the initial content of the editor.</p>'
-                  init={{
-                     height: 500,
-                     skin: "oxide-dark",
-                     content_css: "dark",
-                     menubar: true,
-                     plugins: [...current_plugins],
-                     toolbar:
-                        "undo redo | blocks | " +
-                        "bold italic forecolor | alignleft aligncenter " +
-                        "alignright alignjustify | bullist numlist outdent indent | " +
-                        "removeformat | help | code",
-                     content_style:
-                        "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+            <section className='mt-3'>
+               <input
+                  type='text'
+                  className='w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-white'
+                  value={input}
+                  onChange={(e) => {
+                     setInput(e.target.value);
                   }}
-               >
-                  <button onClick={log}>Log editor content</button>
-               </Editor>
+               />
+               <List input={input} />
             </section>
          </main>
       </Page>
