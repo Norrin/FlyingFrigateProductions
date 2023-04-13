@@ -69,7 +69,7 @@ const BibleSlider = ({ readings }) => {
 
 const Gallery = () => {
    const [date, setCurrentDate] = useState(Date.now());
-   const { data, loading, error } = useBibleReading({ date: date });
+   const { data, loading, error } = useBibleReading({ date: date, limit: 3 });
 
    return (
       <Page>
