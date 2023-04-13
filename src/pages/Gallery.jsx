@@ -1,35 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Page } from "@components";
-import { UseFetch } from "../utils";
+import { useBibleReading } from "@utils";
+
+const BibleCard = ({ reading }) => {
+   const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+   ];
+
+   const getMonthText = (month) => {
+      return months[parseInt(month) - 1];
+   };
+
+   return (
+      <div className='flex flex-col justify-center items-center border-2 border-slate-100 px-3 py-2 mb-5'>
+         <div className='flex flex-col justify-center items-center pb-4'>
+            <div className='text-2xl font-bold flex gap-2'>
+               <div>{getMonthText(reading.Month)}</div>
+               <div>{reading.Day}</div>
+            </div>
+         </div>
+         <div className='flex flex-row justify-center items-center gap-7'>
+            <div className='flex gap-2'>
+               <div>{reading.Reading1}</div>
+               <div>{reading.Reading1Verses}</div>
+            </div>
+            <div className='flex gap-2'>
+               <div>{reading.Reading2}</div>
+               <div>{reading.Reading2Verses}</div>
+            </div>
+            <div className='flex gap-2'>
+               <div>{reading.Reading3}</div>
+               <div>{reading.Reading3Verses}</div>
+            </div>
+            <div className='flex gap-2'>
+               <div>{reading.Reading4}</div>
+               <div>{reading.Reading4Verses}</div>
+            </div>
+         </div>
+      </div>
+   );
+};
+
+const BibleSlider = ({ readings }) => {
+   return (
+      <div>
+         {readings &&
+            readings.length > 0 &&
+            readings.map((reading) => (
+               <BibleCard
+                  key={`${reading.Month}-${reading.Day}`}
+                  reading={reading}
+               />
+            ))}
+      </div>
+   );
+};
 
 const Gallery = () => {
-   const [post, setPost] = useState({});
-
-   const { data, loading, error } = UseFetch(
-      "https://jsonplaceholder.typicode.com/posts"
-   );
-
-   const fetchPost = (id) => {
-      fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
-         .then((response) => response.json())
-         .then((json) => console.log(json));
-   };
+   const [date, setCurrentDate] = useState(Date.now());
+   const { data, loading, error } = useBibleReading({ date: date });
 
    return (
       <Page>
          <main className='flex justify-center pt-5'>Gallery</main>
-         <section className='flex flex-col justify-center items-center mt-2 mb-5 border-red-100 border-2 h-[600px] overflow-auto'>
-            <h1 className='text-2xl'>Posts</h1>
+         <section className='flex flex-col justify-center items-center mt-2 mb-5 h-[400px] overflow-auto '>
             <div>
                {loading && <p>Loading...</p>}
                {error && <p>Error</p>}
-               {data && (
-                  <div>
-                     {data.map((post) => (
-                        <p key={post.id}>{post.title}</p>
-                     ))}
-                  </div>
-               )}
+               {data && data.length > 0 && <BibleSlider readings={data} />}
             </div>
          </section>
       </Page>
