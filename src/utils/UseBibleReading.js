@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import biblereading from "../data/bible-reading.json";
 
-const useBibleReading = ({ date }) => {
+const useBibleReading = ({ date, limit = 3 }) => {
    const [data, setData] = useState([]);
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(null);
